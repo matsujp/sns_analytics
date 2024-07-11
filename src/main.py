@@ -1,8 +1,13 @@
 import hmac
 
-import numpy as np
-import pandas as pd
 import streamlit as st
+
+from components import instagram, top, x
+
+st.set_page_config(
+    page_title="Hello",
+    page_icon="👋",
+)
 
 
 def check_password():
@@ -10,22 +15,26 @@ def check_password():
 
     def password_entered():
         """Checks whether a password entered by the user is correct."""
-        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
-            st.session_state["password_correct"] = True
-            del st.session_state["password"]  # Don't store the password.
-        else:
-            st.session_state["password_correct"] = False
+        for id, pw in st.secrets["accounts"]:
+            if hmac.compare_digest(st.session_state["id"], id) and hmac.compare_digest(
+                st.session_state["pw"], pw
+            ):
+                st.session_state["login_correct"] = True
+                del st.session_state["pw"]  # Don't store the password.
+                break
+            else:
+                st.session_state["login_correct"] = False
 
     # Return True if the password is validated.
-    if st.session_state.get("password_correct", False):
+    if st.session_state.get("login_correct", False):
         return True
 
     # Show input for password.
-    st.text_input(
-        "Password", type="password", on_change=password_entered, key="password"
-    )
-    if "password_correct" in st.session_state:
-        st.error("😕 Password incorrect")
+    st.text_input("E-mail", type="default", key="id")
+    st.text_input("Password", type="password", key="pw")
+    st.button("login", on_click=password_entered)
+    if "login_correct" in st.session_state:
+        st.error("😕 E-mail または Password が正しくありません")
     return False
 
 
@@ -33,11 +42,13 @@ if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
 # Main Streamlit app starts here
-st.write("Here goes your normal Streamlit app...")
-st.button("Click me")
 
-st.text("test sns analyzer")
-st.button("change")
-df = pd.DataFrame(np.random.randn(10, 5), columns=("col %d" % i for i in range(5)))
 
-st.table(df)
+sns_type = st.sidebar.selectbox("Chose SNS", ("-", "X", "Instagram"))
+
+if sns_type == "-":
+    top.page()
+if sns_type == "X":
+    x.page()
+if sns_type == "Instagram":
+    instagram.page()
