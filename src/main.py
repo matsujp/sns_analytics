@@ -4,10 +4,7 @@ import streamlit as st
 
 from components import instagram, top, x
 
-st.set_page_config(
-    page_title="Hello",
-    page_icon="👋",
-)
+st.set_page_config(page_title="SNS Analyzer", page_icon="📈", layout="wide")
 
 
 def check_password():
