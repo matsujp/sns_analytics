@@ -7,7 +7,7 @@ def page():
 
     feature = st.sidebar.radio(
         "Select feature",
-        ["機能A", "機能B", "機能C"],
+        ["🔍検索リサーチ(例)", "🙍アカウント分析(例)", "📚ツイート取得(例)"],
         key="feature",
         captions=["", "", ""],
     )
@@ -19,8 +19,7 @@ def page():
         )
 
         st.table(df)
-    if feature == "機能B":
-        input = st.text_input("キーワードを入力")
+    if feature == "🙍アカウント分析(例)":
         st.subheader("graph B")
         chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
 

@@ -40,7 +40,6 @@ if not check_password():
 
 # Main Streamlit app starts here
 
-
 sns_type = st.sidebar.selectbox("Chose SNS", ("-", "X", "Instagram"))
 
 if sns_type == "-":
