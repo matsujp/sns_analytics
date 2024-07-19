@@ -1,10 +1,11 @@
 import hmac
 
 import streamlit as st
+import top
+from instagram import instagram
+from x import x
 
-from components import instagram, top, x
-
-st.set_page_config(page_title="SNS Analyzer", page_icon="📈", layout="wide")
+st.set_page_config(page_title="SNS Analytics", page_icon="📈", layout="wide")
 
 
 def check_password():
@@ -35,16 +36,22 @@ def check_password():
     return False
 
 
-if not check_password():
-    st.stop()  # Do not continue if check_password is not True.
+# if not check_password():
+#     st.stop()  # Do not continue if check_password is not True.
 
 # Main Streamlit app starts here
 
-sns_type = st.sidebar.selectbox("Chose SNS", ("-", "X"))
+if "sns_type" not in st.session_state:
+    st.session_state["sns_type"] = "-"
 
-if sns_type == "-":
+with st.sidebar:
+    st.title("SNS Analytics")
+    st.divider()
+    st.selectbox("Choose SNS", ("-", "X (Twitter)"), key="sns_type")
+
+if st.session_state["sns_type"] == "-":
     top.page()
-if sns_type == "X":
+if st.session_state["sns_type"] == "X (Twitter)":
     x.page()
-if sns_type == "Instagram":
+if st.session_state["sns_type"] == "Instagram":
     instagram.page()
