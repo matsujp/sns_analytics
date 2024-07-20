@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 
-from .components import account
+from .components import acseatch
 
 
 def make_table(data):
@@ -27,7 +27,7 @@ def click_handler(
         return
 
     st.session_state["x_account_data"], st.session_state["x_account_status"] = (
-        account.get_data(
+        acseatch.get_data(
             x_api_key,
             x_api_secret_key,
             x_access_token,
@@ -42,7 +42,7 @@ def page():
     if "x_account_status" not in st.session_state:
         st.session_state["x_account_status"] = 0
     if "x_account_input" not in st.session_state:
-        st.session_state["x_account_input"] = pd.DataFrame([{"username": ""}])
+        st.session_state["x_account_input"] = pd.DataFrame([{"username": None}])
 
     st.text("検索ユーザーネームリスト")
     df = st.data_editor(

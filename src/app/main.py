@@ -45,7 +45,7 @@ if "sns_type" not in st.session_state:
     st.session_state["sns_type"] = "-"
 
 with st.sidebar:
-    st.title(":blue[SNS Analytics]")
+    st.title(":blue[SNS Analytics](仮)")
     st.divider()
     st.selectbox("Choose SNS", ("-", "X (Twitter)"), key="sns_type")
 
