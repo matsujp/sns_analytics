@@ -22,6 +22,9 @@ def click_handler(
     if len(username_list) == 0:
         st.error("検索ユーザーネームを入力してください", icon="🚨")
         return
+    if len(username_list) > 100:
+        st.error("検索できるユーザーネーム数は100件までです", icon="🚨")
+        return
 
     st.session_state["x_account_data"], st.session_state["x_account_status"] = (
         account.get_data(
@@ -36,6 +39,8 @@ def click_handler(
 
 
 def page():
+    if "x_account_status" not in st.session_state:
+        st.session_state["x_account_status"] = 0
     if "x_account_input" not in st.session_state:
         st.session_state["x_account_input"] = pd.DataFrame([{"username": ""}])
 
@@ -46,6 +51,9 @@ def page():
         use_container_width=True,
     )
 
+    usename_list = (
+        df[df["username"].str.replace(" ", "") != ""]["username"].dropna().tolist()
+    )
     st.button(
         "データ取得",
         on_click=click_handler,
@@ -55,10 +63,13 @@ def page():
             st.session_state["x_access_token"],
             st.session_state["x_access_token_secret"],
             st.session_state["x_bearer_token"],
-            df["username"].dropna().tolist(),
+            usename_list,
         ],
     )
 
     if "x_account_data" in st.session_state:
-        df = make_table(st.session_state["x_account_data"])
-        st.dataframe(df)
+        if st.session_state["x_account_status"] == 0:
+            df = make_table(st.session_state["x_account_data"])
+            st.dataframe(df, height=800)
+        else:
+            st.error(st.session_state["x_account_data"], icon="🚨")

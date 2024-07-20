@@ -19,15 +19,15 @@ def get_data(
             x_access_token_secret,
             x_bearer_token,
         )
-        response = get_api_data(client, username_list)
-        data = extract_data(response)
+        response = _call_api(client, username_list)
+        data = _extract_data(response)
         return [data, 0]
 
     except Exception as e:
         return [e, 1]
 
 
-def get_api_data(
+def _call_api(
     client: Client,
     username_list: list[str],
 ):
@@ -58,7 +58,7 @@ def get_api_data(
     return response
 
 
-def extract_data(response: Response):
+def _extract_data(response: Response):
     if response.data is None:
         return []
 
@@ -69,17 +69,25 @@ def extract_data(response: Response):
             data_item[key] = user[key]
         for key in user["public_metrics"]:
             data_item[key] = user["public_metrics"][key]
+
+        if "tweets" not in response.includes.keys():
+            data.append(data_item)
+            continue
+
         tweets = [
             tweet
             for tweet in response.includes["tweets"]
             if tweet["author_id"] == data_item["id"]
         ]
-        if len(tweets) > 0:
-            tweet = tweets[0]
-            for key in ["text", "created_at"]:
-                data_item[key] = tweet[key]
-            for key in tweet["public_metrics"]:
-                data_item[key] = tweet["public_metrics"][key]
+        if len(tweets) == 0:
+            data.append(data_item)
+            continue
+
+        tweet = tweets[0]
+        for key in ["text", "created_at"]:
+            data_item[key] = tweet[key]
+        for key in tweet["public_metrics"]:
+            data_item[key] = tweet["public_metrics"][key]
         data.append(data_item)
 
     return data

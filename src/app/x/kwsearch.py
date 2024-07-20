@@ -80,6 +80,6 @@ def page():
             # MAX_HEIGHT = 800
             # ROW_HEIGHT = 35
             # AgGrid(df, height=min(MIN_HEIGHT + len(df) * ROW_HEIGHT, MAX_HEIGHT))
-            st.dataframe(df)
+            st.dataframe(df, height=800)
         else:
             st.error(st.session_state["x_kwsearch_data"], icon="🚨")
