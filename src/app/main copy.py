@@ -1,15 +1,10 @@
 import hmac
-import os
-from urllib import parse
+import urllib.parse as parse
 
 import streamlit as st
 import top
-import tweepy
-from dotenv import load_dotenv
 from instagram import instagram
 from x import x
-
-load_dotenv()
 
 st.set_page_config(page_title="SNS Analytics", page_icon="📈", layout="wide")
 
@@ -42,45 +37,40 @@ def check_password():
     return False
 
 
-def oauth2():
-    REDIRECTED_URL = "https://sns-analytics-dev.onrender.com/"
-    CLIENT_ID = os.getenv("CLIENT_ID")
-    CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+def oauth():
+    AUTH_URL = "https://twitter.com/i/oauth2/authorize"
+    RESPOSE_TYPE = "code"
+    TWITTER_CLIENT_ID = "NVhxVW5ZbUtkeEczMFlKejAySmQ6MTpjaQ"
+    # REDIRECT_URI = "https://sns-analytics-dev.onrender.com/"
+    REDIRECT_URI = "https://sns-analytics-dev.onrender.com/"
+    STATE = "state"
+    SCOPE = ["tweet.read", "tweet.write", "users.read", "offline.access"]
+    CODE_CHALLENGE = "challenge"
+    CODE_CHALLENGE_METHOD = "code_challenge_method=plain"
 
-    print(CLIENT_ID)
-    print(CLIENT_SECRET)
-    if st.session_state.get("login_correct", False):
-        return True
-
-    oauth2_user_handler = tweepy.OAuth2UserHandler(
-        client_id=CLIENT_ID,
-        redirect_uri=REDIRECTED_URL,
-        scope=[
-            "tweet.read",
-            "like.read",
-            "bookmark.read",
-            "users.read",
-            "bookmark.write",
-        ],
-        client_secret=CLIENT_SECRET,
+    query_parameter = parse.urlencode(
+        {
+            "response_type": RESPOSE_TYPE,
+            "client_id": TWITTER_CLIENT_ID,
+            "redirect_uri": REDIRECT_URI,
+            "state": STATE,
+            "scope": " ".join(SCOPE),
+            "code_challenge": CODE_CHALLENGE,
+            "code_challenge_method": CODE_CHALLENGE_METHOD,
+        }
     )
+
+    request_url = f"{AUTH_URL}?{query_parameter}"
 
     st.markdown(
         "<h1 style='text-align: center; color: grey;'>Welcome to SNS Anlyzer</h1>",
         unsafe_allow_html=True,
     )
-    st.columns(5)[2].link_button(
-        "Login", oauth2_user_handler.get_authorization_url(), use_container_width=True
-    )
-
-    query_params = parse.urlencode(st.query_params)
-    oauth2_user_handler.fetch_token(f"{REDIRECTED_URL}?{query_params}")
-
-    return False
+    st.columns(5)[2].link_button("Log In", request_url, use_container_width=True)
 
 
-if not oauth2():
-    st.stop()
+if not oauth():
+    st.stop()  # Do not continue if check_password is not True.
 
 # Main Streamlit app starts here
 
