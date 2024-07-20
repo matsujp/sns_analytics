@@ -11,7 +11,7 @@ st.set_page_config(page_title="SNS Analytics", page_icon="📈")
 
 def x_oauth():
     TWITTER_CLIENT_ID = os.getenv("X_CLIENT_ID")
-    REDIRECT_URI = "https://sns-analytics-dev.onrender.com/"
+    REDIRECT_URI = os.getenv("X_REDIRECT_URL")
     SCOPE = [
         "tweet.read",
         "tweet.write",
