@@ -10,8 +10,9 @@ st.set_page_config(page_title="SNS Analytics", page_icon="📈")
 
 
 def x_oauth():
-    TWITTER_CLIENT_ID = os.getenv("X_CLIENT_ID")
     REDIRECT_URI = os.getenv("X_REDIRECT_URL")
+    CLIENT_ID = os.getenv("X_CLIENT_ID")
+    CLIENT_SECRET = os.getenv("X_CLIENT_SECRET")
     SCOPE = [
         "tweet.read",
         "tweet.write",
@@ -23,10 +24,10 @@ def x_oauth():
     ]
 
     oauth2_user_handler = tweepy.OAuth2UserHandler(
-        client_id=TWITTER_CLIENT_ID,
+        client_id=CLIENT_ID,
         redirect_uri=REDIRECT_URI,
         scope=SCOPE,
-        client_secret=os.getenv("X_CLIENT_SECRET"),
+        client_secret=CLIENT_SECRET,
     )
 
     x_request_url = oauth2_user_handler.get_authorization_url()
