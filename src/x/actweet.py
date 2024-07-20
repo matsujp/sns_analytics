@@ -2,8 +2,7 @@ from datetime import date
 
 import pandas as pd
 import streamlit as st
-
-from .components import actweet
+from components import actweet
 
 
 def click_handler(

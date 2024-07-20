@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
-
-from .components import acseatch
+from components import acseatch
 
 
 def make_table(data):
