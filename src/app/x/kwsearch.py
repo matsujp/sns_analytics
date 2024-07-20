@@ -3,6 +3,8 @@ import streamlit as st
 
 from .components import kwsearch
 
+# from st_aggrid import AgGrid
+
 
 def click_handler(
     x_api_key: str,
@@ -13,9 +15,9 @@ def click_handler(
     q: str,
     max_results: int,
 ):
-
     if q.replace(" ", "") == "":
-        st.error("キーワードを入力してください", icon="🚨")
+        st.error("検索キーワードを入力してください", icon="🚨")
+        return
 
     st.session_state["x_kwsearch_data"], st.session_state["x_kwsearch_status"] = (
         kwsearch.get_data(
@@ -32,20 +34,19 @@ def click_handler(
 
 def make_table():
     df = pd.DataFrame(st.session_state["x_kwsearch_data"])
-    df = df.drop(columns=["id", "author_id"])
+    df = df.drop(columns=["author_id"])
     df.index = df.index + 1
     return df
 
 
 def page():
-
     if "x_kwsearch_kw" not in st.session_state:
         st.session_state["x_kwsearch_kw"] = ""
     if "x_kwsearch_status" not in st.session_state:
         st.session_state["x_kwsearch_status"] = 0
 
     st.text_input(
-        label="キーワード",
+        label="検索キーワード",
         value=st.session_state["x_kwsearch_kw"],
         placeholder="キーワードを入力してください",
         key="x_kwsearch_kw",
@@ -74,6 +75,11 @@ def page():
 
     if "x_kwsearch_data" in st.session_state:
         if st.session_state["x_kwsearch_status"] == 0:
-            st.dataframe(make_table())
+            df = make_table()
+            # MIN_HEIGHT = 27
+            # MAX_HEIGHT = 800
+            # ROW_HEIGHT = 35
+            # AgGrid(df, height=min(MIN_HEIGHT + len(df) * ROW_HEIGHT, MAX_HEIGHT))
+            st.dataframe(df)
         else:
             st.error(st.session_state["x_kwsearch_data"], icon="🚨")

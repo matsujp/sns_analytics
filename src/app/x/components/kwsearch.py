@@ -43,7 +43,7 @@ def get_api_data(
             "referenced_tweets.id.author_id",
         ],
         "user_fields": ["description", "url", "public_metrics"],
-        "tweet_fields": ["public_metrics"],
+        "tweet_fields": ["created_at", "public_metrics"],
     }
     response = client.search_recent_tweets(**params)
 
@@ -51,15 +51,13 @@ def get_api_data(
 
 
 def extract_data(response):
-
-    print(response)
     if response.data is None:
         return []
 
     main_data = []
     for data in response.data:
         item_data = {}
-        for key in ["id", "author_id", "text"]:
+        for key in ["created_at", "author_id", "text"]:
             item_data[key] = data[key]
         for key in data["public_metrics"]:
             item_data[key] = data["public_metrics"][key]

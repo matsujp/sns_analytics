@@ -1,6 +1,6 @@
 import streamlit as st
 
-from . import kwsearch
+from . import account, kwsearch
 
 
 def page():
@@ -53,10 +53,12 @@ def page():
 
         st.radio(
             "Select feature",
-            ["キーワード検索", "編集中・・・"],
+            ["キーワード検索", "アカウント検索", "Comming soon..."],
             key="x_feature",
             captions=["", "", ""],
         )
 
     if st.session_state["x_feature"] == "キーワード検索":
         kwsearch.page()
+    if st.session_state["x_feature"] == "アカウント検索":
+        account.page()

@@ -164,3 +164,4 @@ cython_debug/
 requirements-dev.lock
 requirements.lock
 .python-versions
+data

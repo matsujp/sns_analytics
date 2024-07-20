@@ -9,8 +9,9 @@
 #   generate-hashes: false
 
 -e file:.
-altair==5.3.0
+altair==4.2.2
     # via streamlit
+    # via streamlit-aggrid
 asttokens==2.4.1
     # via stack-data
 attrs==23.2.0
@@ -35,6 +36,8 @@ debugpy==1.8.2
     # via ipykernel
 decorator==5.1.1
     # via ipython
+entrypoints==0.4
+    # via altair
 executing==2.0.1
     # via stack-data
 gitdb==4.0.11
@@ -82,12 +85,12 @@ oauthlib==3.2.2
     # via requests-oauthlib
     # via tweepy
 packaging==24.1
-    # via altair
     # via ipykernel
     # via streamlit
 pandas==2.2.2
     # via altair
     # via streamlit
+    # via streamlit-aggrid
 parso==0.8.4
     # via jedi
 pillow==10.4.0
@@ -112,6 +115,8 @@ pygments==2.18.0
 python-dateutil==2.9.0.post0
     # via jupyter-client
     # via pandas
+python-decouple==3.8
+    # via streamlit-aggrid
 pytz==2024.1
     # via pandas
 pywin32==306
@@ -141,6 +146,9 @@ smmap==5.0.1
 stack-data==0.6.3
     # via ipython
 streamlit==1.36.0
+    # via sns-analytics
+    # via streamlit-aggrid
+streamlit-aggrid==1.0.5
     # via sns-analytics
 tenacity==8.5.0
     # via streamlit
