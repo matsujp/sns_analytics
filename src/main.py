@@ -23,6 +23,11 @@ def login():
 
 
 if "user" not in st.session_state:
+    st.markdown(
+        "<h1 style='text-align: center; color: grey;'>Welcome to SNS Anlytics(仮)</h1>",
+        unsafe_allow_html=True,
+    )
+    st.divider()
     login()
     st.stop()
 

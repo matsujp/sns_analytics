@@ -62,20 +62,18 @@ def page():
             key="x_feature",
             captions=["", "", ""],
         )
-    print(st.session_state["user"]["email"])
-    print(st.session_state["user"]["localId"])
+
     # 全会員利用可能
     if st.session_state["x_feature"] == "キーワード検索":
         kwsearch.page()
+    if st.session_state["x_feature"] == "Comming soon...":
+        commingsoon.page()
 
+    # 有料会員のみ利用可能
     elif st.session_state["trial"]:
         trialuser.page()
         st.stop()
-
-    # 有料会員利用可能
     if st.session_state["x_feature"] == "アカウント検索":
         acsearch.page()
     if st.session_state["x_feature"] == "アカウント投稿取得":
         actweet.page()
-    if st.session_state["x_feature"] == "Comming soon...":
-        commingsoon.page()
