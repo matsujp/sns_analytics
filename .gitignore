@@ -165,3 +165,4 @@ requirements-dev.lock
 requirements.lock
 .python-versions
 data
+*copy.py

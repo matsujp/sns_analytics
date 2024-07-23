@@ -1,3 +1,6 @@
 streamlit
 tweepy
 python-dotenv
+streamlit-authenticator
+Pyrebase4
+setuptools
