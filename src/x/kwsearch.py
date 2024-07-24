@@ -34,6 +34,9 @@ def click_handler(
 
 def make_table():
     df = pd.DataFrame(st.session_state["x_kwsearch_data"])
+    if len(df) == 0:
+        df[""] = ["データが見つかりませんでした"]
+        return df
     df = df.drop(columns=["author_id"])
     df.index = df.index + 1
     return df
