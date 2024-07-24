@@ -55,8 +55,8 @@ def page():
             "Select feature",
             [
                 "キーワード検索",
-                "アカウント検索",
-                "アカウント投稿取得",
+                # "アカウント検索",
+                # "アカウント投稿取得",
                 "Comming soon...",
             ],
             key="x_feature",
@@ -66,13 +66,14 @@ def page():
     # 全会員利用可能
     if st.session_state["x_feature"] == "キーワード検索":
         kwsearch.page()
-    if st.session_state["x_feature"] == "Comming soon...":
+    elif st.session_state["x_feature"] == "Comming soon...":
         commingsoon.page()
 
     # 有料会員のみ利用可能
     elif st.session_state["trial"]:
         trialuser.page()
         st.stop()
+
     if st.session_state["x_feature"] == "アカウント検索":
         acsearch.page()
     if st.session_state["x_feature"] == "アカウント投稿取得":
