@@ -5,7 +5,7 @@ from instagram import instagram
 from top import top
 from x import x
 
-st.set_page_config(page_title="SNS Analytics", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Social Vision", page_icon="📈", layout="wide")
 
 
 def login():
@@ -24,7 +24,7 @@ def login():
 
 if "user" not in st.session_state:
     st.markdown(
-        "<h1 style='text-align: center; color: grey;'>Welcome to SNS Anlytics(仮)</h1>",
+        "<h1 style='text-align: center; color: grey;'>Welcome to Social Vision</h1>",
         unsafe_allow_html=True,
     )
     st.divider()
@@ -32,7 +32,7 @@ if "user" not in st.session_state:
     st.stop()
 
 with st.sidebar:
-    st.title(":blue[SNS Analytics](仮)")
+    st.title(":blue[Social Vision]")
     st.divider()
     st.selectbox("Select SNS", ("-", "X (Twitter)"), key="selected_sns")
 
