@@ -57,7 +57,7 @@ def page():
                 "キーワード検索",
                 "アカウント検索",
                 "アカウント投稿取得",
-                "Comming soon...",
+                # "Comming soon...",
             ],
             key="x_feature",
             captions=["", "", ""],
